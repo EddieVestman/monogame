@@ -89,7 +89,7 @@ namespace Template
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Pink);
+            GraphicsDevice.Clear(Color.Blue);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
 	        spriteBatch.End();
