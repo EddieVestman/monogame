@@ -12,12 +12,18 @@ namespace Template
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D bulldog; 
-        Rectangle bulldogPos = new Rectangle(new Point(300, 350), new Point(150, 150));
+        Rectangle bulldogPos;
         //KOmentar
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
+            
+
             
         }
 
@@ -29,7 +35,10 @@ namespace Template
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            bulldogPos = new Rectangle(new Point(0,0), new Point(180, 180));
+            bulldogPos.Y = graphics.PreferredBackBufferHeight - bulldogPos.Height;
+            bulldogPos.X = graphics.PreferredBackBufferWidth /2 - bulldogPos.Width /2;
+
 
             base.Initialize();
         }
@@ -68,10 +77,10 @@ namespace Template
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
               KeyboardState kstate = Keyboard.GetState();
-	        if (kstate.IsKeyDown(Keys.Right))
-		    bulldogPos.X+= 10;
-	        if (kstate.IsKeyDown(Keys.Left))
-		    bulldogPos.X-= 10;
+	        if (kstate.IsKeyDown(Keys.Right) && bulldogPos.X < graphics.PreferredBackBufferWidth -bulldogPos.Width )
+		        bulldogPos.X+= 17;
+	        if (kstate.IsKeyDown(Keys.Left) && bulldogPos.X > 0)
+		        bulldogPos.X-= 17;
 
             
 
@@ -89,7 +98,7 @@ namespace Template
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Blue);
+            GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
 	        spriteBatch.End();
