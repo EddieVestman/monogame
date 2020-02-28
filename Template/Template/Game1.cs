@@ -11,8 +11,9 @@ namespace Template
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D bulldog; 
+        Texture2D bulldog;
         Rectangle bulldogPos;
+        Texture2D meatballtexture;
         //KOmentar
         public Game1()
         {
@@ -39,7 +40,6 @@ namespace Template
             bulldogPos.Y = graphics.PreferredBackBufferHeight - bulldogPos.Height;
             bulldogPos.X = graphics.PreferredBackBufferWidth /2 - bulldogPos.Width /2;
 
-
             base.Initialize();
         }
 
@@ -52,6 +52,7 @@ namespace Template
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             bulldog = Content.Load<Texture2D>("bulldog");
+            meatballtexture = Content.Load<Texture2D>("meatball");
 
 
 
@@ -101,15 +102,16 @@ namespace Template
             GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
+
+            
+
+
 	        spriteBatch.End();
-
-
-
-
-
             // TODO: Add your drawing code here.
 
             base.Draw(gameTime);
+
+            
         }
     }
 }
