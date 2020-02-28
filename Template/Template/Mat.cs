@@ -11,25 +11,45 @@ namespace Template
 {
     class Mat
     {
-        Vector2 position;
-        Texture2D texture;
-        Vector2 center;
-        float angle = 0;
+        public Vector2 position;
+        public Texture2D texture;
+        public Vector2 velocity;
 
-        public Mat(Texture2D texture, Vector2 position)
+        public bool isVisible = true;
+
+        Random random = new Random();
+        int randX, randY;
+
+        public static int Count { get; internal set; }
+
+        public Mat(Texture2D newTexture, Vector2 newPosition)
         {
-            this.texture = texture;
-            this.center = position;
+            texture = newTexture;
+            position = newPosition;
+
+            randY = random.Next(-4, 4);
+            randX = random.Next(-4, -1);
+
+            velocity = new Vector2(randX, randY);
+
         }
-        public void Update()
+        public void Update(GraphicsDevice graphics)
         {
-            angle -= .1f;
-            position.X = center.X + (float)Math.Sin(angle) * 30;
-            position.Y = center.Y + (float)Math.Cos(angle) * 30;
+            position += velocity;
+
+          //  if (position.Y <= 0 || position.Y >= graphics.Viewport.Height - texture.Height)
+            //    velocity.Y = -velocity.Y;
+
+            if (position.X < 0 - texture.Width)
+                isVisible = false;
+            
+
         }
-        public void Draw (SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(position.ToPoint(), new Point(15, 15)), Color.White);
+            spriteBatch.Draw(texture, position, Color.White);
         }
     }
 }
+
+     

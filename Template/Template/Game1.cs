@@ -1,12 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Template
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    /// 
+
+        // Game World
+        
+        
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -14,7 +21,13 @@ namespace Template
         Texture2D bulldog;
         Rectangle bulldogPos;
         Texture2D meatballtexture;
+        Rectangle Meatballpos;
         Mat köttbulle;
+        List<Mat> enemies = new List<Mat>();
+        Random random = new Random();
+
+        float spawn = 0;
+
         //KOmentar
         public Game1()
         {
@@ -22,7 +35,7 @@ namespace Template
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             
 
@@ -54,7 +67,7 @@ namespace Template
             spriteBatch = new SpriteBatch(GraphicsDevice);
             bulldog = Content.Load<Texture2D>("bulldog");
             meatballtexture = Content.Load<Texture2D>("meatball");
-            köttbulle = new Mat(meatballtexture, new Vector2(0, 0));
+            köttbulle = new Mat(meatballtexture, new Vector2(100, 100));
 
 
             // TODO: use this.Content to load your game content here 
@@ -69,11 +82,7 @@ namespace Template
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -84,14 +93,31 @@ namespace Template
 	        if (kstate.IsKeyDown(Keys.Left) && bulldogPos.X > 0)
 		        bulldogPos.X-= 17;
 
+            köttbulle.Update(GraphicsDevice);
+            spawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             
 
-
-
-
-            // TODO: Add your update logic here
-
+            foreach (Mat enemy in enemies)
+                enemy.Update(graphics.GraphicsDevice);
+            //LoadContent();
             base.Update(gameTime);
+        }
+        public void LoadEnemies()
+        {
+            int randY = random.Next(100, 400);
+            if (spawn >= 1)
+            {
+                spawn = 0;
+                if (enemies.Count < 4)
+                    enemies.Add(new Mat(Content.Load<Texture2D>("meatball"), new Vector2(100, randY)));
+            }
+            for (int i = 0; i < enemies.Count; i++)
+                if (!enemies[i].isVisible)
+                {
+                    enemies.RemoveAt(i);
+                    i--;
+                }
         }
 
         /// <summary>
@@ -104,6 +130,8 @@ namespace Template
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
             köttbulle.Draw(spriteBatch);
+            foreach (Mat enemy in enemies)
+                enemy.Draw(spriteBatch);
             
 
 
