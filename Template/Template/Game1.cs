@@ -14,6 +14,7 @@ namespace Template
         Texture2D bulldog;
         Rectangle bulldogPos;
         Texture2D meatballtexture;
+        Mat köttbulle;
         //KOmentar
         public Game1()
         {
@@ -53,7 +54,7 @@ namespace Template
             spriteBatch = new SpriteBatch(GraphicsDevice);
             bulldog = Content.Load<Texture2D>("bulldog");
             meatballtexture = Content.Load<Texture2D>("meatball");
-
+            köttbulle = new Mat(meatballtexture, new Vector2(0, 0));
 
 
             // TODO: use this.Content to load your game content here 
@@ -102,7 +103,7 @@ namespace Template
             GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
-
+            köttbulle.Draw(spriteBatch);
             
 
 
