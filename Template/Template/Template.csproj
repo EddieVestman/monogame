@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Content\MatSpawner.cs" />
     <Compile Include="Mat.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

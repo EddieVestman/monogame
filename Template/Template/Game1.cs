@@ -21,12 +21,11 @@ namespace Template
         Texture2D bulldog;
         Rectangle bulldogPos;
         Texture2D meatballtexture;
-        Rectangle Meatballpos;
-        Mat köttbulle;
-        List<Mat> enemies = new List<Mat>();
+        Vector2 meatballPos;
+        Mat meatball;
         Random random = new Random();
 
-        float spawn = 0;
+
 
         //KOmentar
         public Game1()
@@ -54,6 +53,14 @@ namespace Template
             bulldogPos.Y = graphics.PreferredBackBufferHeight - bulldogPos.Height;
             bulldogPos.X = graphics.PreferredBackBufferWidth /2 - bulldogPos.Width /2;
 
+            meatballtexture = Content.Load<Texture2D>("meatball");
+            meatball = new Mat(meatballtexture);
+
+            meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
+            meatballPos.Y = -20;
+
+            meatball.meatballPos = meatballPos;
+
             base.Initialize();
         }
 
@@ -67,7 +74,7 @@ namespace Template
             spriteBatch = new SpriteBatch(GraphicsDevice);
             bulldog = Content.Load<Texture2D>("bulldog");
             meatballtexture = Content.Load<Texture2D>("meatball");
-            köttbulle = new Mat(meatballtexture, new Vector2(100, 100));
+
 
 
             // TODO: use this.Content to load your game content here 
@@ -93,32 +100,13 @@ namespace Template
 	        if (kstate.IsKeyDown(Keys.Left) && bulldogPos.X > 0)
 		        bulldogPos.X-= 17;
 
-            köttbulle.Update(GraphicsDevice);
-            spawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            meatball.Update();
 
-            
 
-            foreach (Mat enemy in enemies)
-                enemy.Update(graphics.GraphicsDevice);
             //LoadContent();
             base.Update(gameTime);
         }
-        public void LoadEnemies()
-        {
-            int randY = random.Next(100, 400);
-            if (spawn >= 1)
-            {
-                spawn = 0;
-                if (enemies.Count < 4)
-                    enemies.Add(new Mat(Content.Load<Texture2D>("meatball"), new Vector2(100, randY)));
-            }
-            for (int i = 0; i < enemies.Count; i++)
-                if (!enemies[i].isVisible)
-                {
-                    enemies.RemoveAt(i);
-                    i--;
-                }
-        }
+       
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -129,13 +117,13 @@ namespace Template
             GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
-            köttbulle.Draw(spriteBatch);
-            foreach (Mat enemy in enemies)
-                enemy.Draw(spriteBatch);
-            
+            meatball.Draw(spriteBatch);
 
 
-	        spriteBatch.End();
+
+
+
+            spriteBatch.End();
             // TODO: Add your drawing code here.
 
             base.Draw(gameTime);

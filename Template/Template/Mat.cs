@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,45 +7,22 @@ namespace Template
 {
     class Mat
     {
-        public Vector2 position;
-        public Texture2D texture;
-        public Vector2 velocity;
+        Vector2 position;
+        Texture2D texture;
 
-        public bool isVisible = true;
-
-        Random random = new Random();
-        int randX, randY;
-
-        public static int Count { get; internal set; }
-
-        public Mat(Texture2D newTexture, Vector2 newPosition)
+        public Mat(Texture2D texture)
         {
-            texture = newTexture;
-            position = newPosition;
-
-            randY = random.Next(-4, 4);
-            randX = random.Next(-4, -1);
-
-            velocity = new Vector2(randX, randY);
-
+            this.texture = texture;
         }
-        public void Update(GraphicsDevice graphics)
+        public Vector2 meatballPos { set { position = value; } }
+
+        public void Update ()
         {
-            position += velocity;
-
-          //  if (position.Y <= 0 || position.Y >= graphics.Viewport.Height - texture.Height)
-            //    velocity.Y = -velocity.Y;
-
-            if (position.X < 0 - texture.Width)
-                isVisible = false;
-            
-
+            position.Y += 10;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, new Rectangle(position.ToPoint(), new Point(200, 200)), Color.White);
         }
     }
 }
-
-     
