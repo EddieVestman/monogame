@@ -10,15 +10,20 @@ namespace Template
         Vector2 position;
         Texture2D texture;
 
-        public Mat(Texture2D texture)
+        public Mat(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
+            this.position = position;
         }
         public Vector2 meatballPos { set { position = value; } }
 
         public void Update ()
         {
             position.Y += 10;
+
+            //Kontrollera om köttbullen försvinner
+            
+
         }
         public void Draw(SpriteBatch spriteBatch)
         {

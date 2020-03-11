@@ -25,6 +25,8 @@ namespace Template
         Mat meatball;
         Random random = new Random();
 
+        List<Mat> Meatballs = new List<Mat>();
+
 
 
         //KOmentar
@@ -54,12 +56,17 @@ namespace Template
             bulldogPos.X = graphics.PreferredBackBufferWidth /2 - bulldogPos.Width /2;
 
             meatballtexture = Content.Load<Texture2D>("meatball");
-            meatball = new Mat(meatballtexture);
 
-            meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
-            meatballPos.Y = -20;
+            for (int i = 0; i < 1; i++)
+            {
+                meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
+                meatballPos.Y = -20;
+                meatball = new Mat(meatballtexture,meatballPos);
 
-            meatball.meatballPos = meatballPos;
+                Meatballs.Add(meatball);
+            }
+
+            //meatball.meatballPos = meatballPos;
 
             base.Initialize();
         }
@@ -100,8 +107,21 @@ namespace Template
 	        if (kstate.IsKeyDown(Keys.Left) && bulldogPos.X > 0)
 		        bulldogPos.X-= 17;
 
-            meatball.Update();
+            //meatball.Update();
 
+            if(Meatballs.Count<2)
+            {
+                meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
+                meatballPos.Y = -20;
+                meatball = new Mat(meatballtexture, meatballPos);
+
+                Meatballs.Add(meatball);
+            }
+
+            foreach (Mat kB in Meatballs)
+            {
+                kB.Update();
+            }
 
             //LoadContent();
             base.Update(gameTime);
@@ -117,7 +137,12 @@ namespace Template
             GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
-            meatball.Draw(spriteBatch);
+            foreach(Mat kB in Meatballs)
+            {
+                kB.Draw(spriteBatch);
+            }
+            
+            //meatball.Draw(spriteBatch);
 
 
 
