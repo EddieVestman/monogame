@@ -27,6 +27,8 @@ namespace Template
 
         List<Mat> Meatballs = new List<Mat>();
 
+        meatballspawner mbs;
+
 
 
         //KOmentar
@@ -57,7 +59,7 @@ namespace Template
 
             meatballtexture = Content.Load<Texture2D>("meatball");
 
-            for (int i = 0; i < 1; i++)
+         /*   for (int i = 0; i < 1; i++)
             {
                 meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
                 meatballPos.Y = -20;
@@ -65,35 +67,26 @@ namespace Template
 
                 Meatballs.Add(meatball);
             }
-
+            */
             //meatball.meatballPos = meatballPos;
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+       
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             bulldog = Content.Load<Texture2D>("bulldog");
             meatballtexture = Content.Load<Texture2D>("meatball");
+            mbs = new meatballspawner( graphics,  meatballtexture);
 
 
-
-            // TODO: use this.Content to load your game content here 
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+      
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
 
@@ -107,9 +100,11 @@ namespace Template
 	        if (kstate.IsKeyDown(Keys.Left) && bulldogPos.X > 0)
 		        bulldogPos.X-= 17;
 
+            mbs.Update();
+
             //meatball.Update();
 
-            if(Meatballs.Count<2)
+          /*  if(Meatballs.Count<2)
             {
                 meatballPos.X = random.Next(graphics.PreferredBackBufferWidth);
                 meatballPos.Y = -20;
@@ -122,8 +117,8 @@ namespace Template
             {
                 kB.Update();
             }
-
-            //LoadContent();
+            */
+            
             base.Update(gameTime);
         }
        
@@ -137,12 +132,15 @@ namespace Template
             GraphicsDevice.Clear(Color.Pink);
             spriteBatch.Begin();
 	        spriteBatch.Draw(bulldog, bulldogPos, Color.White);
-            foreach(Mat kB in Meatballs)
+
+            mbs.Draw(spriteBatch);
+            
+          /*  foreach(Mat kB in Meatballs)
             {
                 kB.Draw(spriteBatch);
             }
-            
-            //meatball.Draw(spriteBatch);
+            */
+          //  meatball.Draw(spriteBatch);
 
 
 

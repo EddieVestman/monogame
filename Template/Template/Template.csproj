@@ -44,6 +44,7 @@
     <Compile Include="Content\MatSpawner.cs" />
     <Compile Include="Mat.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="meatballspawner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
